@@ -33,12 +33,12 @@ class DeletePostServiceTest {
         given(postRepository.delete(1L)).willReturn(expected);
 
         // when
-        DeletePostResponse post = sut.deletePost(1L);
+        DeletePostResponse deleted = sut.deletePost(1L);
 
         // then
-        assertThat(post.getId()).isEqualTo(expected.getId().toString());
-        assertThat(post.getTitle()).isEqualTo(expected.getTitle());
-        assertThat(post.getAuthor()).isEqualTo(expected.getAuthor());
-        assertThat(post.getContent()).isEqualTo(expected.getContent());
+        assertThat(deleted.getId()).isEqualTo(expected.getId().toString());
+        assertThat(deleted.getTitle()).isEqualTo(expected.getTitle());
+        assertThat(deleted.getAuthor()).isEqualTo(expected.getAuthor());
+        assertThat(deleted.getContent()).isEqualTo(expected.getContent());
     }
 }
