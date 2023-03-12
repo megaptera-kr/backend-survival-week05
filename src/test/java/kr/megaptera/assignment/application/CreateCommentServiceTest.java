@@ -2,6 +2,7 @@ package kr.megaptera.assignment.application;
 
 import kr.megaptera.assignment.dtos.CommentCreateRequestDto;
 import kr.megaptera.assignment.dtos.CommentResponseDto;
+import kr.megaptera.assignment.entities.CommentEntity;
 import kr.megaptera.assignment.repositories.CommentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,6 +39,6 @@ class CreateCommentServiceTest {
     assertThat(commentDto.getAuthor()).isEqualTo("작성자");
     assertThat(commentDto.getContent()).isEqualTo("댓글 내용");
 
-    verify(commentRepository).save(any(String.class), any(CommentCreateRequestDto.class));
+    verify(commentRepository).save(any(CommentEntity.class));
   }
 }

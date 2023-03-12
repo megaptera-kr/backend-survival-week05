@@ -8,6 +8,7 @@ import kr.megaptera.assignment.application.UpdatePostService;
 import kr.megaptera.assignment.dtos.PostCreateRequestDto;
 import kr.megaptera.assignment.dtos.PostResponseDto;
 import kr.megaptera.assignment.dtos.PostUpdateRequestDto;
+import kr.megaptera.assignment.exceptions.PostNotFound;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ class PostControllerTest {
     // given
     String id = "123";
 
-    given(getPostService.getPostDatail(id))
+    given(getPostService.getPostDetail(id))
       .willReturn(new PostResponseDto(id, "제목", "작성자", "내용"));
 
     mockMvc.perform(get("/posts/" + id))
@@ -90,7 +91,7 @@ class PostControllerTest {
   void detail() throws Exception {
     String id = "999";
 
-    given(getPostService.getPostDatail(id))
+    given(getPostService.getPostDetail(id))
       .willThrow(new PostNotFound());
 
     mockMvc.perform(get("/posts/" + id))

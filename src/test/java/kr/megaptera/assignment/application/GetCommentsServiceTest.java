@@ -40,7 +40,7 @@ class GetCommentsServiceTest {
     ));
 
     List<CommentResponseDto> commentDtos
-      = getCommentsService.getCommentDtos(postId);
+      = getCommentsService.getComments(postId);
 
     assertThat(commentDtos).hasSize(1);
   }

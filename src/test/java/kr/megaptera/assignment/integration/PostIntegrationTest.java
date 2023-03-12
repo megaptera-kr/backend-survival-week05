@@ -1,6 +1,8 @@
 package kr.megaptera.assignment.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.megaptera.assignment.application.DeletePostService;
+import kr.megaptera.assignment.application.GetPostsService;
 import kr.megaptera.assignment.dtos.PostCreateRequestDto;
 import kr.megaptera.assignment.dtos.PostResponseDto;
 import kr.megaptera.assignment.dtos.PostUpdateRequestDto;
@@ -24,6 +26,7 @@ import static kr.megaptera.assignment.utils.AppStringUtils.POST_REQ_MAP;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,6 +42,12 @@ class PostIntegrationTest {
   private MockMvc mockMvc;
 
   @Autowired
+  private GetPostsService getPostsService;
+
+  @Autowired
+  private DeletePostService deletePostService;
+
+  @Autowired
   private ObjectMapper objectMapper;
 
   private List<PostCreateRequestDto> postCreateRequestDtos = new ArrayList<>();
@@ -47,8 +56,14 @@ class PostIntegrationTest {
   private String authorSamplePrefix = "글쓴이입니다";
   private String contentSamplePrefix = "내용입니다";
 
+  public PostIntegrationTest() {
+  }
+
   @BeforeEach
   public void setUp() throws Exception {
+    deleteAll();
+
+
     postCreateRequestDtos = IntStream.range(1, SETUP_ITEM_NUM + 1).mapToObj((number) -> {
       PostCreateRequestDto postCreateRequestDto =
         new PostCreateRequestDto(titleSamplePrefix + number,
@@ -69,6 +84,14 @@ class PostIntegrationTest {
     }).collect(Collectors.toList());
   }
 
+  private void deleteAll() {
+    List<PostResponseDto> posts = getPostsService.getPosts();
+    for (PostResponseDto post : posts
+    ) {
+      deletePostService.deletePost(post.getId());
+    }
+  }
+
   @Test
   @DisplayName("GET /posts")
     // 게시글 목록을 성공적으로 가져온다.
@@ -78,7 +101,7 @@ class PostIntegrationTest {
 
     //when then
     this.mockMvc.perform(get("/posts")).andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON + ";charset=UTF-8"))
                 .andExpect(jsonPath("$", hasSize(SETUP_ITEM_NUM)))
                 // 첫번째 아이템이 title이라는 키를 포함하나?
                 .andExpect(jsonPath("$[0]", hasKey("title")));
@@ -141,7 +164,7 @@ class PostIntegrationTest {
                                                                               .content(
                                                                                 objectMapper.writeValueAsString(
                                                                                   postUpdateRequestDto)))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasKey("title")))
                 .andExpect(jsonPath("$.title", equalTo(title)))
                 .andExpect(jsonPath("$.content", equalTo(content)))
@@ -155,7 +178,7 @@ class PostIntegrationTest {
     final int DELETE_TARGET_IDX = 0;
     final PostResponseDto targetPostResponseDto = postResponseDtos.get(DELETE_TARGET_IDX);
     this.mockMvc.perform(
-          patch(POST_REQ_MAP + PATH_SEPERATOR + targetPostResponseDto.getId()))
+          delete(POST_REQ_MAP + PATH_SEPERATOR + targetPostResponseDto.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasKey("title")))
                 .andExpect(jsonPath("$.title", equalTo(targetPostResponseDto.getTitle())))

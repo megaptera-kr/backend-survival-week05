@@ -1,10 +1,29 @@
 package kr.megaptera.assignment.entities;
 
+import kr.megaptera.assignment.utils.NewIdGenerator;
+
 public class PostEntity implements Cloneable {
   private String id;
   private String title;
   private String author;
   private String content;
+
+  public PostEntity() {
+  }
+
+  public PostEntity(String id, String title, String author, String content) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.content = content;
+  }
+
+  public PostEntity(String title, String author, String content) {
+    this.id = NewIdGenerator.getNewPostId();
+    this.title = title;
+    this.author = author;
+    this.content = content;
+  }
 
   public String getId() {
     return id;
@@ -22,13 +41,8 @@ public class PostEntity implements Cloneable {
     return content;
   }
 
-  public PostEntity() {
-  }
-
-  public PostEntity(String id, String title, String author, String content) {
-    this.id = id;
+  public void update(String title, String content) {
     this.title = title;
-    this.author = author;
     this.content = content;
   }
 }

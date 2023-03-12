@@ -2,6 +2,7 @@ package kr.megaptera.assignment.application;
 
 import kr.megaptera.assignment.dtos.PostCreateRequestDto;
 import kr.megaptera.assignment.dtos.PostResponseDto;
+import kr.megaptera.assignment.entities.PostEntity;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,6 +36,6 @@ class CreatePostServiceTest {
     assertThat(postDto.getAuthor()).isEqualTo("작성자");
     assertThat(postDto.getContent()).isEqualTo("내용");
 
-    verify(postRepository).save(any(PostCreateRequesteDto.class));
+    verify(postRepository).save(any(PostEntity.class));
   }
 }

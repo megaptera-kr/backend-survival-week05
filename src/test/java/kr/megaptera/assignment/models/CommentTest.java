@@ -17,7 +17,7 @@ class CommentTest {
     );
 
     assertThat(comment.getId()).isNotNull();
-    assertThat(comment.getPostId()).isEqualTo("1");
+    assertThat(comment.getPostId()).isEqualTo("2");
     assertThat(comment.getAuthor()).isEqualTo("작성자");
     assertThat(comment.getContent()).isEqualTo("댓글 내용");
   }
