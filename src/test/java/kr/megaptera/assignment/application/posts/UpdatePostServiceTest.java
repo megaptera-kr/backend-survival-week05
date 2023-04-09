@@ -2,6 +2,7 @@ package kr.megaptera.assignment.application.posts;
 
 import kr.megaptera.assignment.dtos.posts.PostUpdateDto;
 import kr.megaptera.assignment.entities.PostEntity;
+import kr.megaptera.assignment.exceptions.PostNotFoundException;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ class UpdatePostServiceTest {
 
     @Test
     @DisplayName("게시물 수정")
-    void update() {
+    void update() throws PostNotFoundException {
         var postEntity = new PostEntity(
                 "0001POST",
                 "제목",
