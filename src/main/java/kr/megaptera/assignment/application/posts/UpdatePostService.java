@@ -3,6 +3,7 @@ package kr.megaptera.assignment.application.posts;
 import kr.megaptera.assignment.dtos.posts.PostReadDto;
 import kr.megaptera.assignment.dtos.posts.PostUpdateDto;
 import kr.megaptera.assignment.entities.PostEntity;
+import kr.megaptera.assignment.exceptions.PostNotFoundException;
 import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,12 @@ public class UpdatePostService {
         this.postRepository = postRepository;
     }
 
-    public PostReadDto execute(String postId, PostUpdateDto reqBody) {
+    public PostReadDto execute(String postId, PostUpdateDto reqBody) throws PostNotFoundException {
         var oldEntity = postRepository.find(postId);
+        if(oldEntity == null){
+            throw new PostNotFoundException();
+        }
+
         var model = new Post(oldEntity);
         model.update(reqBody.getTitle(), reqBody.getContent());
 

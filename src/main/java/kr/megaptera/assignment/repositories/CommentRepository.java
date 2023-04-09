@@ -31,7 +31,7 @@ public class CommentRepository {
     }
 
     public void update(CommentEntity comment) {
-        comments.replace(comment.getId(), comment);
+        comments.replace( comment.getId(), comment);
     }
 
     public void remove(CommentEntity comment) {
