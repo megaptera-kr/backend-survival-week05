@@ -2,6 +2,7 @@ package kr.megaptera.assignment.controllers;
 
 import kr.megaptera.assignment.application.*;
 import kr.megaptera.assignment.dtos.*;
+import kr.megaptera.assignment.exceptions.*;
 import kr.megaptera.assignment.models.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -54,5 +55,10 @@ public class CommentController {
         CommentDto commentDto = deleteCommentService.deleteComment(id, postId);
 
         return commentDto;
+    }
+    @ExceptionHandler(CommentNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "댓글을 찾을 수 없습니다.";
     }
 }

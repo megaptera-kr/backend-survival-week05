@@ -23,7 +23,8 @@ public class CommentRepository {
     }
     public Comment find(CommentId id, PostId postId){
         Comment comment = comments.get(id);
-        if (comment == null || comment.postId().equals(postId))
+
+        if (comment == null || !comment.postId().equals(postId))
         {
             throw new CommentNotFound();
         }
