@@ -8,7 +8,7 @@
 ./gradlew bootRun
 ```
 
-## 백엔드 테스트
+## 백엔드 테스트j
 
 ```shell
 ./gradlew test
