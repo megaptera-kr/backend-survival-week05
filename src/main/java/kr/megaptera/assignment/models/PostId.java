@@ -15,6 +15,10 @@ public class PostId {
          return new PostId(TsidCreator.getTsid().toString());
     }
 
+    public static PostId of(String id) {
+        return new PostId(id);
+    }
+
     @Override
     public String toString() {
         return this.value;
@@ -32,11 +36,4 @@ public class PostId {
         return Objects.hash(value);
     }
 
-    public static PostId of(String id) {
-        return new PostId(id);
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

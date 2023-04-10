@@ -17,6 +17,7 @@ public class GetCommentsService {
 
     public List<CommentDto> getCommentDtos(String postId) {
         List<Comment> comments = commentRepository.findAll(PostId.of(postId));
+
         return comments.stream().map(CommentDto::new).toList();
     }
 

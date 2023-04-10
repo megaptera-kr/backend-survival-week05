@@ -7,12 +7,15 @@ public class CommentDto {
     private String author;
     private String content;
 
+    public CommentDto(){}
     public CommentDto(String id, String author, String content) {
         this.id = id;
         this.author = author;
         this.content = content;
     }
-
+    public CommentDto(Comment comment) {
+        this(comment.id().toString(), comment.author(), comment.content());
+    }
     public String getId() {
         return id;
     }
@@ -25,5 +28,4 @@ public class CommentDto {
         return content;
     }
 
-    public CommentDto(Comment comment){}
 }

@@ -6,7 +6,9 @@ import kr.megaptera.assignment.repositories.*;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class CreateCommentServiceTest {
     private CommentRepository commentRepository;
@@ -25,5 +27,6 @@ class CreateCommentServiceTest {
         createCommentService.createCommentDto("1",ccd);
 
         assertThat(ccd.getAuthor()).isEqualTo("나");
+        verify(commentRepository).save(any(Comment.class));
     }
 }
