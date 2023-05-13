@@ -8,6 +8,9 @@ public class PostDto {
     private String author;
     private String content;
 
+    public PostDto() {
+    }
+
     public PostDto(String id, String title, String author, String content) {
         this.id = id;
         this.title = title;
