@@ -19,8 +19,8 @@ public class PostRepository {
     public PostRepository() {
         this.posts = new HashMap<PostId, Post>();
         
-        this.posts.put(PostId.of("1"), new Post(PostId.of("1"), PostTitle.of("제목"), "작성자", PostTextContent.of("글 내용")));
-        this.posts.put(PostId.of("2"), new Post(PostId.of("2"), PostTitle.of("2등"), "작성자", PostTextContent.of("2빠지롱")));
+//        this.posts.put(PostId.of("1"), new Post(PostId.of("1"), PostTitle.of("제목"), "작성자", PostTextContent.of("글 내용")));
+//        this.posts.put(PostId.of("2"), new Post(PostId.of("2"), PostTitle.of("2등"), "작성자", PostTextContent.of("2빠지롱")));
     }
 
     Map<PostId, Post> posts;
