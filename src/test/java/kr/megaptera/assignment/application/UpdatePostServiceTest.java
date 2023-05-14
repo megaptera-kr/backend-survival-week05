@@ -44,8 +44,7 @@ class UpdatePostServiceTest {
                                 MultilineText.of("신난닷!!\n너무 좋아용~~!!")));
 
         PostUpdateDto postUpdateDto = new PostUpdateDto("새로 글 쓰기", "새로 글을\n쓰는 중입니다.\n\n좋아용");
-
-        // Save 후 return 받은 결과를 알 수는 없음
+        
         PostDto postDto = updatePostService.updatePost("2", postUpdateDto);
 
         verify(postRepository).save(any(Post.class));

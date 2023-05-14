@@ -26,8 +26,7 @@ class GetPostServiceTest {
     @BeforeEach
     void setUp() {
         postRepository = mock(PostRepository.class);
-
-        // Repository class에 실제 DB가 연결된 경우, 실제 DB를 사용하지 않을듯
+        
         getPostService = new GetPostService(postRepository);
     }
 
