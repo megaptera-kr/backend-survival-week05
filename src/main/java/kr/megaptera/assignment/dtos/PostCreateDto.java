@@ -3,6 +3,12 @@ package kr.megaptera.assignment.dtos;
 import kr.megaptera.assignment.models.Post;
 
 public class PostCreateDto {
+    public PostCreateDto(String title, String author, String content) {
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
+
     public String getTitle() {
         return title;
     }
