@@ -7,8 +7,6 @@ import kr.megaptera.assignment.application.GetPostsService;
 import kr.megaptera.assignment.application.UpdatePostService;
 import kr.megaptera.assignment.dtos.PostDto;
 import kr.megaptera.assignment.exceptions.PostNotFound;
-import kr.megaptera.assignment.models.Post;
-import kr.megaptera.assignment.models.PostId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
