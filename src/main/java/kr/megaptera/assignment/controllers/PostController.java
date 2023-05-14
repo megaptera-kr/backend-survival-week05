@@ -8,8 +8,10 @@ import kr.megaptera.assignment.application.UpdatePostService;
 import kr.megaptera.assignment.dtos.PostCreateDto;
 import kr.megaptera.assignment.dtos.PostDto;
 import kr.megaptera.assignment.dtos.PostUpdateDto;
+import kr.megaptera.assignment.exceptions.PostNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,5 +68,11 @@ public class PostController {
     @DeleteMapping("/{id}")
     private PostDto deletePost(@PathVariable("id") String postId) {
         return deletePostService.delete(postId);
+    }
+
+    @ExceptionHandler(PostNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "게시물을 찾을 수 없다.\n";
     }
 }

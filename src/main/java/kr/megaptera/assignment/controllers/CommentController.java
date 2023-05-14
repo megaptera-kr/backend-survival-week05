@@ -40,7 +40,7 @@ public class CommentController {
     }
 
     @GetMapping
-    private List<CommentDto> getComments(@RequestParam("postId") String postId) {
+    private List<CommentDto> getComments(@RequestParam String postId) {
         return getCommentsService.findAll(postId);
     }
 
