@@ -13,6 +13,13 @@ public class Comment {
 
     private MultilineText content;
 
+    public Comment(CommentId id, PostId postId, CommentAuthor author, MultilineText content) {
+        this.id = id;
+        this.postId = postId;
+        this.author = author;
+        this.content = content;
+    }
+
     public Comment(PostId postId, CommentCreateDto commentCreateDto) {
         this.id = new CommentId();
         this.postId = postId;

@@ -16,6 +16,7 @@ public class CreateCommentService {
 
     public CommentDto createComment(String postId, CommentCreateDto commentCreateDto) {
         Comment comment = new Comment(PostId.of(postId), commentCreateDto);
-        return new CommentDto(commentRepository.save(PostId.of(postId), comment));
+        commentRepository.save(PostId.of(postId), comment);
+        return new CommentDto(comment);
     }
 }

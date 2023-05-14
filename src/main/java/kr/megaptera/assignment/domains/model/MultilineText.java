@@ -1,23 +1,19 @@
 package kr.megaptera.assignment.domains.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringTokenizer;
 
 public class MultilineText {
 
     private final List<String> content;
 
     public MultilineText(String text) {
-
-        this.content = new ArrayList<>();
-
-        StringTokenizer st = new StringTokenizer(text, "\n");
-
-        while (st.hasMoreElements()) {
-            content.add(st.nextToken());
-        }
+        // StringTokenizer로 나누면 빈칸을 버려버리는듯
+        this.content = new ArrayList<>(
+                Arrays.stream(text.split("\n"))
+                        .toList());
     }
 
     public static MultilineText of(String content) {
@@ -27,12 +23,16 @@ public class MultilineText {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        
+
         for (String line : content) {
             sb.append(line).append("\n");
         }
 
-        return sb.toString();
+        return sb.toString().trim();
+    }
+
+    public List<String> getContent() {
+        return content;
     }
 
     @Override
