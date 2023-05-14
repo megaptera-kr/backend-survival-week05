@@ -23,7 +23,7 @@ class CreateCommentServiceTest {
     void setUp() {
         commentRepository = mock(CommentRepository.class);
 
-        CreateCommentService createCommentService = new CreateCommentService(commentRepository);
+        createCommentService = new CreateCommentService(commentRepository);
     }
 
     @Test
