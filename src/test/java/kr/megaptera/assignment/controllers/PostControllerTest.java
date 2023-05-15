@@ -13,7 +13,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("GET /posts/{id} - with correct ID")
-    void detailWithCorrectId() {
+    void detailWithCorrectId() {   
     }
 
     @Test
