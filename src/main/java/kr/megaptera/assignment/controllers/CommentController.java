@@ -62,9 +62,9 @@ public class CommentController {
         return deleted;
     }
 
-//    @ExceptionHandler(CommentNotFound.class)
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public String postNotFound() {
-//        return "댓글을 찾을 수 없습니다.";
-//    }
+    @ExceptionHandler(CommentNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "댓글을 찾을 수 없습니다.";
+    }
 }

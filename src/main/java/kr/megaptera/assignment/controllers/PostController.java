@@ -61,9 +61,9 @@ public class PostController {
         return postDto;
     }
 
-//    @ExceptionHandler(PostNotFound.class)
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public String postNotFound() {
-//        return "게시물을 찾을 수 없습니다.";
-//    }
+    @ExceptionHandler(PostNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "게시물을 찾을 수 없습니다.";
+    }
 }
