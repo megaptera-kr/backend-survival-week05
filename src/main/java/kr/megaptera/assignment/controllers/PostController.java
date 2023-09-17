@@ -8,9 +8,11 @@ import kr.megaptera.assignment.application.GetPostsService;
 import kr.megaptera.assignment.application.UpdatePostService;
 import kr.megaptera.assignment.dto.PostCreateDto;
 import kr.megaptera.assignment.dto.PostDto;
+import kr.megaptera.assignment.dto.PostUpdateDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,14 +35,14 @@ public class PostController {
 
     public PostController(CreatePostService createPostService,
                           GetPostsService getPostsService,
-                          GetPostService getPostService
-//                          UpdatePostService updatePostService,
+                          GetPostService getPostService,
+                          UpdatePostService updatePostService
 //                          DeletePostService deletePostService
     ) {
         this.createPostService = createPostService;
         this.getPostsService = getPostsService;
         this.getPostService = getPostService;
-//        this.updatePostService = updatePostService;
+        this.updatePostService = updatePostService;
 //        this.deletePostService = deletePostService;
     }
 
@@ -61,6 +63,14 @@ public class PostController {
     public PostDto getDetail(@PathVariable String id){
         PostDto postDto = getPostService.getPostDto(id);
         return postDto;
+    }
+
+    @PatchMapping("/{id}")
+    public PostDto update(@PathVariable String id,
+                          @RequestBody PostUpdateDto postUpdateDto){
+        PostDto updated = updatePostService.updatePost(postUpdateDto, id);
+
+        return updated;
     }
 
 }

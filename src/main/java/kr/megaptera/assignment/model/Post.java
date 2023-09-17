@@ -40,4 +40,8 @@ public class Post {
         return content;
     }
 
+    public void update(SingleLineText title, MultiLineText content) {
+        this.title = title;
+        this.content = content;
+    }
 }
