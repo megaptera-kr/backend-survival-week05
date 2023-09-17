@@ -7,6 +7,9 @@ import kr.megaptera.assignment.application.GetPostsService;
 import kr.megaptera.assignment.application.UpdatePostService;
 import kr.megaptera.assignment.dto.PostCreateDto;
 
+import kr.megaptera.assignment.dto.PostDto;
+import kr.megaptera.assignment.dto.PostUpdateDto;
+import kr.megaptera.assignment.exception.PostNotFound;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -49,16 +53,44 @@ class PostControllerTest {
     @Test
     @DisplayName("GET /posts")
     void list() throws Exception {
+        given(getPostsService.getPostDtos()).willReturn(List.of(
+                new PostDto("001", "title1", "작성자1", "내용1"),
+                new PostDto("002", "제목2", "작성자2", "내용2")
+        ));
+
+        mockMvc.perform(get("/posts"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(
+                        containsString("title1")
+                ));
     }
+
 
     @Test
     @DisplayName("GET /posts/{id} - with correct ID")
     void detailWithCorrectId() throws Exception {
+        String id = "001POST";
+
+        given(getPostService.getPostDto(id))
+                .willReturn(new PostDto(id, "title", "작성자", "내용"));
+
+        mockMvc.perform(get("/posts/" + id))
+                .andExpect(status().isOk())
+                .andExpect(content().string(
+                        containsString("title")
+                ));
     }
 
     @Test
     @DisplayName("GET /posts/{id} - with incorrect ID")
     void detail() throws Exception {
+        String id = "999POST";
+
+        given(getPostService.getPostDto(id))
+                .willThrow(new PostNotFound());
+
+        mockMvc.perform(get("/posts/" + id))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -84,11 +116,34 @@ class PostControllerTest {
     @Test
     @DisplayName("PATCH /posts/{id}")
     void update() throws Exception {
+        String id = "001POST";
+
+        String json = """
+                {
+                  "title": "데브로드",
+                  "content": "열심히 합시다"
+                }
+                """;
+
+        mockMvc.perform(patch("/posts/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                )
+                .andExpect(status().isOk());
+
+        verify(updatePostService)
+                .updatePost(eq(id), any(PostUpdateDto.class));
     }
 
     @Test
     @DisplayName("DELETE /posts/{id}")
     void deletePost() throws Exception {
+        String id = "001POST";
+
+        mockMvc.perform(delete("/posts/" + id))
+                .andExpect(status().isOk());
+
+        verify(deletePostService).deletePost(id);
     }
 }
 
