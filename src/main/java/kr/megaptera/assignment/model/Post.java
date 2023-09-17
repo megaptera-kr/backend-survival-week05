@@ -8,13 +8,20 @@ public class Post {
     private PostId id;
     private SingleLineText title;
     private SingleLineText author;
-    private MultiLineText comment;
+    private MultiLineText content;
 
-    public Post(PostCreateDto postCreateDto){
+    public Post(PostId id, SingleLineText title, SingleLineText author, MultiLineText content){
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
+
+    public Post(SingleLineText title, SingleLineText author, MultiLineText content){
         this.id = new PostId(UUID.randomUUID().toString());
-        this.title = new SingleLineText(postCreateDto.getTitle());
-        this.author = new SingleLineText(postCreateDto.getAuthor());
-        this.comment = new MultiLineText(postCreateDto.getComment());
+        this.title = title;
+        this.author = author;
+        this.content = content;
     }
 
     public PostId id(){
@@ -29,8 +36,8 @@ public class Post {
         return author;
     }
 
-    public MultiLineText comment(){
-        return comment;
+    public MultiLineText content(){
+        return content;
     }
 
 }

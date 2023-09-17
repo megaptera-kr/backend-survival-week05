@@ -3,7 +3,7 @@ package kr.megaptera.assignment.dto;
 public class PostCreateDto {
     private String title;
     private String author;
-    private String comment;
+    private String content;
 
     public String getTitle() {
         return title;
@@ -21,11 +21,11 @@ public class PostCreateDto {
         this.author = author;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

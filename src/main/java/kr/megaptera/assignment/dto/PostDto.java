@@ -8,13 +8,13 @@ public class PostDto {
     private String id;
     private String title;
     private String author;
-    private String comment;
+    private String content;
 
     public PostDto(Post post) {
         this.id = post.id().toString();
         this.title = post.title().toString();
         this.author = post.author().toString();
-        this.comment = post.comment().toString();
+        this.content = post.content().toString();
     }
 
     public String getId() {
@@ -41,12 +41,12 @@ public class PostDto {
         this.author = author;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String comment) {
+        this.content = content;
     }
 
 }
