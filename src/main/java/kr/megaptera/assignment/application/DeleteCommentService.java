@@ -3,6 +3,7 @@ package kr.megaptera.assignment.application;
 import kr.megaptera.assignment.dtos.CommentDto;
 import kr.megaptera.assignment.models.Comment;
 import kr.megaptera.assignment.models.CommentId;
+import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,8 @@ public class DeleteCommentService {
         this.commentRepository = commentRepository;
     }
 
-    public CommentDto deleteComment(String id) {
-        Comment comment = commentRepository.find(new CommentId(id));
+    public CommentDto deleteComment(String id, String postId) {
+        Comment comment = commentRepository.find(new CommentId(id), new PostId(postId));
 
         commentRepository.delete(new CommentId(id));
 

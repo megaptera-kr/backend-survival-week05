@@ -7,8 +7,11 @@ import kr.megaptera.assignment.application.UpdateCommentService;
 import kr.megaptera.assignment.dtos.CommentCreateDto;
 import kr.megaptera.assignment.dtos.CommentDto;
 import kr.megaptera.assignment.dtos.CommentUpdateDto;
+import kr.megaptera.assignment.exceptions.CommentNotFound;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
+@CrossOrigin
 public class CommentController {
     private GetCommentsService getCommentsService;
     private CreateCommentService createCommentService;
@@ -56,16 +60,23 @@ public class CommentController {
 
     @PatchMapping("/{id}")
     public CommentDto update(@PathVariable String id,
+                             @RequestParam String postId,
                              @RequestBody CommentUpdateDto commentUpdateDto) {
-        CommentDto updated = updateCommentService.updateComment(id, commentUpdateDto);
+        CommentDto updated = updateCommentService.updateComment(id, postId, commentUpdateDto);
 
         return updated;
     }
 
     @DeleteMapping("/{id}")
-    public CommentDto delete(@PathVariable String id) {
-        CommentDto deleted = deleteCommentService.deleteComment(id);
+    public CommentDto delete(@PathVariable String id, @RequestParam String postId) {
+        CommentDto deleted = deleteCommentService.deleteComment(id, postId);
 
         return deleted;
+    }
+
+    @ExceptionHandler(CommentNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "댓글을 찾을 수 없습니다.";
     }
 }

@@ -1,5 +1,7 @@
 package kr.megaptera.assignment.repositories;
 
+import kr.megaptera.assignment.exceptions.PostNotFound;
+import kr.megaptera.assignment.models.MultilineText;
 import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.models.PostId;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,9 @@ public class PostRepository {
     private final Map<PostId, Post> posts;
 
     public PostRepository() {
-        posts = new HashMap<PostId, Post>();
+        posts = new HashMap<>();
+
+        posts.put(new PostId("0001POST"), new Post(new PostId("0001POST"), "제목", "작성자", new MultilineText("내용")));
     }
 
     public List<Post> findAll() {
@@ -21,7 +25,13 @@ public class PostRepository {
     }
 
     public Post find(PostId postId) {
-        return posts.get(postId);
+        Post post = posts.get(postId);
+
+        if (post == null) {
+            throw new PostNotFound();
+        }
+
+        return post;
     }
 
     public void save(Post post) {

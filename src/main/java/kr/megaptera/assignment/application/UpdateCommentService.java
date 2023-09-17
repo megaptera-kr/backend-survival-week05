@@ -5,6 +5,7 @@ import kr.megaptera.assignment.dtos.CommentUpdateDto;
 import kr.megaptera.assignment.models.Comment;
 import kr.megaptera.assignment.models.CommentId;
 import kr.megaptera.assignment.models.MultilineText;
+import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class UpdateCommentService {
         this.commentRepository = commentRepository;
     }
 
-    public CommentDto updateComment(String id, CommentUpdateDto commentUpdateDto) {
-        Comment comment = commentRepository.find(new CommentId(id));
+    public CommentDto updateComment(String id, String postId, CommentUpdateDto commentUpdateDto) {
+        Comment comment = commentRepository.find(new CommentId(id), new PostId(postId));
 
         comment.update(new MultilineText(commentUpdateDto.getContent()));
 
