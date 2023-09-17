@@ -36,4 +36,10 @@ public class PostRepository {
 
         return post;
     }
+
+    public Post remove(PostId id) {
+        Post post = store.remove(id);
+
+        return post;
+    }
 }

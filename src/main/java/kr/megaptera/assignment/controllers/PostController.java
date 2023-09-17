@@ -11,6 +11,7 @@ import kr.megaptera.assignment.dto.PostDto;
 import kr.megaptera.assignment.dto.PostUpdateDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,14 +37,14 @@ public class PostController {
     public PostController(CreatePostService createPostService,
                           GetPostsService getPostsService,
                           GetPostService getPostService,
-                          UpdatePostService updatePostService
-//                          DeletePostService deletePostService
+                          UpdatePostService updatePostService,
+                          DeletePostService deletePostService
     ) {
         this.createPostService = createPostService;
         this.getPostsService = getPostsService;
         this.getPostService = getPostService;
         this.updatePostService = updatePostService;
-//        this.deletePostService = deletePostService;
+        this.deletePostService = deletePostService;
     }
 
     @PostMapping
@@ -71,6 +72,13 @@ public class PostController {
         PostDto updated = updatePostService.updatePost(postUpdateDto, id);
 
         return updated;
+    }
+
+    @DeleteMapping("/{id}")
+    public PostDto delete(@PathVariable String id){
+        PostDto postDto = deletePostService.deletePost(id);
+
+        return postDto;
     }
 
 }
