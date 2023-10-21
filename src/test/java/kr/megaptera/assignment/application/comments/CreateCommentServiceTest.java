@@ -1,4 +1,4 @@
-package kr.megaptera.assignment.application;
+package kr.megaptera.assignment.application.comments;
 
 class CreateCommentServiceTest {
 }
