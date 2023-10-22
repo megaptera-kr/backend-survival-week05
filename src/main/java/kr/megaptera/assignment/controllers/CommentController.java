@@ -7,6 +7,7 @@ import kr.megaptera.assignment.application.comments.UpdateCommentService;
 import kr.megaptera.assignment.dtos.comments.CommentDto;
 import kr.megaptera.assignment.dtos.comments.CreateCommentDto;
 import kr.megaptera.assignment.dtos.comments.UpdateCommentDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +16,10 @@ import java.util.List;
 @RequestMapping("/comments")
 @CrossOrigin
 public class CommentController {
-    CreateCommentService createCommentService;
-    DeleteCommentService deleteCommentService;
-    GetCommentsService getCommentsService;
-    UpdateCommentService updateCommentService;
+    private final CreateCommentService createCommentService;
+    private final DeleteCommentService deleteCommentService;
+    private final GetCommentsService getCommentsService;
+    private final UpdateCommentService updateCommentService;
 
     public CommentController(CreateCommentService createCommentService, DeleteCommentService deleteCommentService, GetCommentsService getCommentsService, UpdateCommentService updateCommentService) {
         this.createCommentService = createCommentService;
@@ -35,6 +36,7 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public CommentDto postComment(@RequestParam("postId") String postId, @RequestBody CreateCommentDto createCommentDto) {
         return this.createCommentService.create(postId, createCommentDto);
     }
