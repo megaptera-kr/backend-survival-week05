@@ -1,4 +1,4 @@
-package kr.megaptera.assignment.application;
+package kr.megaptera.assignment.application.posts;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
