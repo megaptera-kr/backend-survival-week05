@@ -4,6 +4,7 @@ import kr.megaptera.assignment.application.*;
 import kr.megaptera.assignment.dtos.PostCreateDto;
 import kr.megaptera.assignment.dtos.PostDto;
 import kr.megaptera.assignment.dtos.PostUpdateDto;
+import kr.megaptera.assignment.exceptions.PostNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,5 +67,11 @@ public class PostController {
         PostDto postDto = deletePostService.deletePost(id);
 
         return postDto;
+    }
+
+    @ExceptionHandler(PostNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String postNotFound() {
+        return "게시물을 찾을 수 없습니다.";
     }
 }
