@@ -2,6 +2,8 @@ package kr.megaptera.assignment.models;
 
 import com.github.f4b6a3.tsid.TsidCreator;
 
+import java.util.Objects;
+
 public class Post {
     private PostId id;
     private PostTitle title;
@@ -10,6 +12,12 @@ public class Post {
 
     public Post(PostTitle title, PostAuthor author, MultilineText content) {
         this.id = PostId.of(generate());
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
+    public Post(PostId id, PostTitle title, PostAuthor author, MultilineText content) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.content = content;
@@ -48,5 +56,18 @@ public class Post {
                 ", author=" + author +
                 ", content=" + content +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(author, post.author) && Objects.equals(content, post.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, author, content);
     }
 }
