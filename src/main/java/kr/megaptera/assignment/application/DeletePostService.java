@@ -15,6 +15,8 @@ public class DeletePostService {
         this.postRepository = postRepository;
     }
 
+
+
     public PostDto deletePostDto(String id) {
         Post post = postRepository.find(PostId.of(id));
         if (post == null) {

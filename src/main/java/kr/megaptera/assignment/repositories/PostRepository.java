@@ -32,4 +32,7 @@ public class PostRepository {
     public void delete(PostId id) {
         posts.remove(id);
     }
+    public void clear(){
+        posts.clear();
+    }
 }

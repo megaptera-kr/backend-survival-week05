@@ -1,52 +1,53 @@
 package kr.megaptera.assignment.application;
 
 
+import kr.megaptera.assignment.dtos.PostDto;
 import kr.megaptera.assignment.models.MultilineText;
 import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.models.PostAuthor;
 import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.models.PostTitle;
 import kr.megaptera.assignment.repositories.PostRepository;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class DeletePostServiceTest {
-    private final String ID_TO_DELETE = "AAA";
 
-    @Autowired
+    @SpyBean
     private PostRepository postRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    void setUp() {
-        // 여기서 데이터를 삽입하거나 Mocking 등을 수행
-        postRepository.save(new Post(PostId.of(ID_TO_DELETE), PostTitle.of("새 글"), PostAuthor.of("writer"), MultilineText.of("content1")));
-    }
+    @SpyBean
+    private DeletePostService deletePostService;
 
     @Test
     @DisplayName("게시물 삭제")
-    void deleteTest() throws Exception {
-        int oldSize = postRepository.findAll().size();
-        this.mockMvc.perform(
-                        delete("/posts/"+ID_TO_DELETE))
-                .andExpect(status().isOk());
+    void delete(){
+        // Given
+        String postId = "1";
+        Post post = new Post(PostId.of(postId), PostTitle.of("제목"),PostAuthor.of("작성자"),MultilineText.of("내용"));
+        when(postRepository.find(any())).thenReturn(post);
+        doNothing().when(postRepository).delete(any()); // postRepository.delete(any()) 호출 시 아무 동작도 수행하지 않도록
 
-        int newSize = postRepository.findAll().size();
+        // When
+        PostDto result = deletePostService.deletePostDto(postId);
 
-        assertThat(newSize).isEqualTo(oldSize - 1);
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(postId);
+
+        verify(postRepository).delete(any(PostId.class));
+        verify(deletePostService).deletePostDto(postId);
     }
 }

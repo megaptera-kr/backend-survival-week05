@@ -1,12 +1,17 @@
 package kr.megaptera.assignment.dtos;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.megaptera.assignment.models.Post;
+
+import java.util.Objects;
 
 public class PostDto {
     private String id;
     private String title;
     private String author;
     private String content;
+
 
     public PostDto(String id, String title, String author, String content) {
         this.id = id;
@@ -20,6 +25,12 @@ public class PostDto {
         this.title = post.title().toString();
         this.author = post.author().toString();
         this.content = post.content().toString();
+    }
+
+    @JsonCreator
+    public PostDto(@JsonProperty("title") String title, @JsonProperty("content") String content) {
+        this.title = title;
+        this.content = content;
     }
 
     public String getId() {
@@ -52,5 +63,28 @@ public class PostDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PostDto postDto = (PostDto) o;
+        return Objects.equals(id, postDto.id) && Objects.equals(title, postDto.title) && Objects.equals(author, postDto.author) && Objects.equals(content, postDto.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, author, content);
+    }
+
+    @Override
+    public String toString() {
+        return "PostDto{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }
