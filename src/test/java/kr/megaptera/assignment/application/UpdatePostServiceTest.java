@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,24 +38,25 @@ class UpdatePostServiceTest {
         // 여기서 데이터를 삽입하거나 Mocking 등을 수행
         postRepository.save(new Post(PostId.of(ID_TO_UPDATE), PostTitle.of("originalTitle"), PostAuthor.of(CONST_AUTHOR), MultilineText.of("originalContent")));
     }
+
     @Test
     @DisplayName("게시물 수정")
-    void updateTest() throws Exception {
+    void update() throws Exception {
         String json = String.format("""
-				{
-					"title": "%s",
-					"content": "%s"
-				}
-				""",UPDATED_TITLE,UPDATED_CONTENT);
+                {
+                	"title": "%s",
+                	"content": "%s"
+                }
+                """, UPDATED_TITLE, UPDATED_CONTENT);
         this.mockMvc.perform(
-                        patch("/posts/"+ID_TO_UPDATE)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                        patch("/posts/" + ID_TO_UPDATE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json))
                 .andExpect(status().isOk());
 
         Post postUpdated = postRepository.find(PostId.of(ID_TO_UPDATE));
 
-        assertThat(new Post(PostId.of(ID_TO_UPDATE),PostTitle.of(UPDATED_TITLE),PostAuthor.of(CONST_AUTHOR),MultilineText.of(UPDATED_CONTENT)))
+        assertThat(new Post(PostId.of(ID_TO_UPDATE), PostTitle.of(UPDATED_TITLE), PostAuthor.of(CONST_AUTHOR), MultilineText.of(UPDATED_CONTENT)))
                 .isEqualTo(postUpdated);
     }
 }

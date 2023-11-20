@@ -9,8 +9,6 @@ import kr.megaptera.assignment.repositories.PostRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
@@ -24,7 +22,7 @@ class CreatePostServiceTest {
     @SpyBean
     private PostRepository postRepository;
 
-    @Autowired
+    @SpyBean
     private CreatePostService createPostService;
 
     @Test
@@ -35,6 +33,8 @@ class CreatePostServiceTest {
         PostDto createdPostDto = createPostService.createPostDto(newPostDto);
 
         Assertions.assertThat(createdPostDto).isEqualTo(newPostDto);
+
         verify(postRepository).save(any(Post.class));
+        verify(createPostService).createPostDto(newPostDto);
     }
 }

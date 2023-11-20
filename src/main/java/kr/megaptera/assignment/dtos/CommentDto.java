@@ -19,6 +19,10 @@ public class CommentDto {
         this.content = comment.content().toString();
     }
 
+    public CommentDto(String content) {
+        this.content = content;
+    }
+
     public String getId() {
         return id;
     }
