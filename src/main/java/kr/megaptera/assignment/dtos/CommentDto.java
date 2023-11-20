@@ -1,5 +1,7 @@
 package kr.megaptera.assignment.dtos;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.megaptera.assignment.models.Comment;
 
 public class CommentDto {
@@ -19,7 +21,13 @@ public class CommentDto {
         this.content = comment.content().toString();
     }
 
-    public CommentDto(String content) {
+    @JsonCreator
+    public CommentDto(@JsonProperty("content") String content) {
+        this.content = content;
+    }
+
+    public CommentDto(String author, String content) {
+        this.author = author;
         this.content = content;
     }
 
@@ -45,5 +53,14 @@ public class CommentDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "CommentDto{" +
+                "id='" + id + '\'' +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

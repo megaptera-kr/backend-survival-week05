@@ -21,6 +21,7 @@ public class UpdateCommentService {
         if (comment == null) {
             throw new PostNotFound();
         }
+
         comment.update(MultilineText.of(commentDto.getContent()));
         return new CommentDto(comment);
     }

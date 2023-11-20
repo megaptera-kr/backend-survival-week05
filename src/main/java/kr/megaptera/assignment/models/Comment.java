@@ -14,7 +14,7 @@ public class Comment {
         this.author = author;
         this.content = content;
     }
-
+    
     public PostId postId() {
         return postId;
     }
@@ -37,5 +37,15 @@ public class Comment {
 
     public void update(MultilineText content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "postId=" + postId +
+                ", id=" + id +
+                ", author=" + author +
+                ", content=" + content +
+                '}';
     }
 }

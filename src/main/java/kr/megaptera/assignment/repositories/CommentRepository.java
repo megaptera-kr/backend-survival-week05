@@ -33,4 +33,15 @@ public class CommentRepository {
     public void delete(CommentId commentId) {
         comments.remove(commentId);
     }
+
+    public void clear() {
+        comments.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "CommentRepository{" +
+                "comments=" + comments +
+                '}';
+    }
 }
