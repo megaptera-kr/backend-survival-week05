@@ -37,8 +37,6 @@ class CreatePostServiceTest {
                 .author("author")
                 .build();
 
-        given(postRepository.save(post))
-                .willReturn(post);
         //when
         PostDto postDto = createPostService.createPost(new PostDto(post));
 

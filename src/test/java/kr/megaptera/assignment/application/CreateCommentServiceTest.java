@@ -33,9 +33,6 @@ class CreateCommentServiceTest {
                 .author("author")
                 .build();
 
-        given(commentRepository.save(comment))
-                .willReturn(comment);
-
         //when
         CommentDto commentDto = createCommentService.createComment(comment.getPostId(), new CommentDto(comment));
 

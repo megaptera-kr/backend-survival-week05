@@ -28,13 +28,18 @@ class DeletePostServiceTest {
     @DisplayName("게시물 삭제")
     void delete() throws PostNotFound {
         //given
-        String id = "1";
+        Post post = Post.builder()
+                .id("1")
+                .title("title")
+                .content("content")
+                .author("author")
+                .build();
 
-        given(postRepository.delete(id)).willReturn(true);
+        given(postRepository.find(post.getId())).willReturn(post);
 
         //when
-        deletePostService.deletePost(id);
+        deletePostService.deletePost(post.getId());
         //then
-        assertThat(postRepository.delete(id)).isEqualTo(true);
+        assertThat(postRepository.delete(post.getId())).isEqualTo(true);
     }
 }
