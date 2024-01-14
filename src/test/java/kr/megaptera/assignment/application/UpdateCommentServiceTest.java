@@ -4,7 +4,7 @@ import kr.megaptera.assignment.domain.Comment;
 import kr.megaptera.assignment.dtos.CommentDto;
 import kr.megaptera.assignment.exceptions.CommentNotFound;
 import kr.megaptera.assignment.repositories.CommentRepository;
-import kr.megaptera.assignment.repositories.PostRepository;
+import kr.megaptera.assignment.utils.PostUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,24 +31,21 @@ class UpdateCommentServiceTest {
     void update() throws CommentNotFound {
         //given
         Comment comment = Comment.builder()
-                .id("1")
+                .id(PostUtil.getId())
                 .postId("1")
                 .content("content")
                 .author("author")
                 .build();
 
-        given(commentRepository.find(comment.getId(), comment.getPostId())).willReturn(
-                Comment.builder()
-                        .id(comment.getId())
-                        .postId(comment.getPostId())
-                        .content("Original Content")
-                        .author("Original Author")
-                        .build());
+        Comment updatedComment = Comment.builder()
+                .content("updatedContent")
+                .build();
+
+        given(commentRepository.find(comment.getId(), comment.getPostId())).willReturn(comment);
         //when
-        CommentDto updatedCommentDto = updateCommentService.updateComment(comment.getId(), comment.getPostId(), new CommentDto(comment));
+        updateCommentService.updateComment(comment.getId(), comment.getPostId(), new CommentDto(updatedComment));
         //then
-        assertThat(updatedCommentDto.getContent()).isEqualTo(comment.getContent());
-        assertThat(updatedCommentDto.getAuthor()).isEqualTo(comment.getAuthor());
+        assertThat(comment.getContent()).isEqualTo(updatedComment.getContent());
 
     }
 }

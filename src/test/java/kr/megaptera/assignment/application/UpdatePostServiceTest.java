@@ -34,19 +34,19 @@ class UpdatePostServiceTest {
                 .content("content")
                 .build();
 
-        given(postRepository.find(post.getId())).willReturn(
-                Post.builder()
-                        .id(post.getId())
-                        .title("Original Title")
-                        .content("Original Content")
-                        .build());
+        Post updatedPost = Post.builder()
+                .title("updated title")
+                .content("updated content")
+                .build();
+
+        given(postRepository.find(post.getId())).willReturn(post);
 
         // when
-        PostDto updatedPostDto = updatePostService.updatePost(post.getId(), new PostDto(post));
+        updatePostService.updatePost(post.getId(), new PostDto(updatedPost));
 
         // then
-        assertThat(updatedPostDto.getTitle()).isEqualTo(post.getTitle());
-        assertThat(updatedPostDto.getContent()).isEqualTo(post.getContent());
+        assertThat(post.getTitle()).isEqualTo(updatedPost.getTitle());
+        assertThat(post.getContent()).isEqualTo(updatedPost.getContent());
 
     }
 }

@@ -34,8 +34,7 @@ public class CommentRepository {
         return comment;
     }
 
-    public boolean delete(String id) {
+    public void delete(String id) {
         commentMap.remove(id);
-        return true;
     }
 }
