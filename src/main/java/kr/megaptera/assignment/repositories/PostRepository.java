@@ -2,13 +2,13 @@ package kr.megaptera.assignment.repositories;
 
 import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.models.PostId;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Repository
 public class PostRepository {
 
     private final Map<PostId, Post> repository = new HashMap<>();
@@ -26,4 +26,9 @@ public class PostRepository {
     public void save(Post post) {
         repository.put(post.id(), post);
     }
+
+    public void delete(PostId id) {
+        repository.remove(id);
+    }
+
 }

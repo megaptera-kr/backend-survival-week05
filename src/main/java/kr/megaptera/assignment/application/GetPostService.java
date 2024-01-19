@@ -22,6 +22,7 @@ public class GetPostService {
         if (found == null) {
             throw new PostNotFoundException("invalid post id");
         }
+        
         return PostDto.from(found);
     }
 }
