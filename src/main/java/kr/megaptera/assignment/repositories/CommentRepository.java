@@ -15,6 +15,10 @@ public class CommentRepository {
     private final Map<PostId, Map<CommentId, Comment>> repository = new HashMap<>();
 
     public List<Comment> findAll(PostId postId) {
+        if (!repository.containsKey(postId)) {
+            repository.put(postId, new HashMap<>());
+            return List.of();
+        }
         return repository.get(postId)
                 .values()
                 .stream()

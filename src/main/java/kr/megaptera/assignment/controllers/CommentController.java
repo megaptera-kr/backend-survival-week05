@@ -6,6 +6,7 @@ import kr.megaptera.assignment.application.DeleteCommentService;
 import kr.megaptera.assignment.application.GetCommentsService;
 import kr.megaptera.assignment.application.UpdateCommentService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
+@CrossOrigin("http://localhost:8000")
 public class CommentController {
     private final GetCommentsService getCommentsService;
     private final CreateCommentService createCommentService;
@@ -47,7 +49,7 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDto create(@RequestParam String postId, @RequestParam CommentDto commentDto) {
+    public CommentDto create(@RequestParam String postId, @RequestBody CommentDto commentDto) {
         return createCommentService.create(postId, commentDto);
     }
 
