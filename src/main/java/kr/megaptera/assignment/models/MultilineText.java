@@ -18,4 +18,17 @@ public class MultilineText {
     public String toString() {
         return String.join("\n", value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MultilineText that)) return false;
+
+        return value.equals(that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

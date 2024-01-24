@@ -36,6 +36,5 @@ public class Post {
     public MultilineText content() {
         return content;
     }
-
-
+    
 }
