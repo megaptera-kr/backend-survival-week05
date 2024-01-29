@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,18 +44,18 @@ class DeleteCommentServiceTest {
         Comment comment = new Comment("author", MultilineText.from("content"));
         CommentId commentId = comment.id();
         when(postRepository.findById(postId)).thenReturn(post);
-        when(commentRepository.findAll(postId)).thenReturn(Collections.singletonList(comment));
+        when(commentRepository.findAll(postId)).thenReturn(List.of(comment));
 
         // Act
         CommentDto outputCommentDto = deleteCommentService.delete(commentId.toString(), postId.toString());
 
         // Assert
-        verify(postRepository).findById(postId);
-        verify(commentRepository).findAll(postId);
-        verify(commentRepository).delete(postId, commentId);
         assertThat(outputCommentDto).isNotNull();
         assertThat(outputCommentDto.getAuthor()).isEqualTo(comment.author());
         assertThat(outputCommentDto.getContent()).isEqualTo(comment.content().toString());
+        verify(postRepository).findById(postId);
+        verify(commentRepository).findAll(postId);
+        verify(commentRepository).delete(postId, commentId);
     }
 
     @Test

@@ -38,12 +38,12 @@ class DeletePostServiceTest {
         PostDto outputPostDto = deletePostService.delete(post.id().toString());
 
         // Assert
-        verify(postRepository).findById(post.id());
-        verify(postRepository).delete(post.id());
         assertThat(outputPostDto).isNotNull();
         assertThat(outputPostDto.getTitle()).isEqualTo(post.title());
         assertThat(outputPostDto.getAuthor()).isEqualTo(post.author());
         assertThat(outputPostDto.getContent()).isEqualTo(post.content().toString());
+        verify(postRepository).findById(post.id());
+        verify(postRepository).delete(post.id());
     }
 
     @Test
