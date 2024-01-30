@@ -7,6 +7,8 @@ import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DeletePostService {
 
@@ -18,12 +20,12 @@ public class DeletePostService {
 
     public PostDto delete(String id) {
         PostId postId = PostId.from(id);
-        Post found = this.postRepository.findById(postId);
-        if (found == null) {
+        Optional<Post> found = this.postRepository.findById(postId);
+        if (found.isEmpty()) {
             throw new PostNotFoundException("invalid post id");
         }
         postRepository.delete(postId);
-        
-        return PostDto.from(found);
+
+        return PostDto.from(found.get());
     }
 }

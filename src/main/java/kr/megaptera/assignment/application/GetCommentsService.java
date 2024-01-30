@@ -2,12 +2,14 @@ package kr.megaptera.assignment.application;
 
 import kr.megaptera.assignment.Dtos.CommentDto;
 import kr.megaptera.assignment.exceptions.PostNotFoundException;
+import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.CommentRepository;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GetCommentsService {
@@ -21,8 +23,9 @@ public class GetCommentsService {
     }
 
     public List<CommentDto> list(String postId) {
-        if (postRepository.findById(PostId.from(postId)) == null) {
-            throw new PostNotFoundException("Invalid post id");
+        Optional<Post> post = postRepository.findById(PostId.from(postId));
+        if (post.isEmpty()) {
+            throw new PostNotFoundException("Post not found with ID: " + postId);
         }
 
         return this.commentRepository.findAll(PostId.from(postId))

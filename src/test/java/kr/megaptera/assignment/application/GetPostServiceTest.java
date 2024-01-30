@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -34,7 +36,7 @@ class GetPostServiceTest {
         //  Arrange
         Post post = new Post("title", "author", MultilineText.from("content"));
         PostId postId = post.id();
-        when(postRepository.findById(postId)).thenReturn(post);
+        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
         //  Act
         PostDto postDto = getPostService.detail(postId.toString());
         //  Assert

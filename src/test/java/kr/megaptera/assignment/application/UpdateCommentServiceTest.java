@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,7 +43,7 @@ class UpdateCommentServiceTest {
     void update() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         // Arrange
         Post post = new Post("title", "author", MultilineText.from("content"));
-        when(postRepository.findById(post.id())).thenReturn(post);
+        when(postRepository.findById(post.id())).thenReturn(Optional.of(post));
         Comment comment = new Comment("댓쓴이", MultilineText.from("댓글내용"));
         when(commentRepository.findAll(post.id())).thenReturn(List.of(comment));
         Constructor<CommentDto> constructor = CommentDto.class.getDeclaredConstructor(String.class, String.class, String.class);
@@ -65,7 +66,7 @@ class UpdateCommentServiceTest {
     void updateWhenNoComment() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         // Arrange
         Post post = new Post("title", "author", MultilineText.from("content"));
-        when(postRepository.findById(post.id())).thenReturn(post);
+        when(postRepository.findById(post.id())).thenReturn(Optional.of(post));
         Comment comment = new Comment("댓쓴이", MultilineText.from("댓글내용"));
         when(commentRepository.findAll(post.id())).thenReturn(List.of(comment));
         String nonExistCommentId = "non-exist-comment-id";

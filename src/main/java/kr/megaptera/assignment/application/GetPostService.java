@@ -7,6 +7,8 @@ import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GetPostService {
 
@@ -18,11 +20,11 @@ public class GetPostService {
 
     public PostDto detail(String id) {
         PostId postId = PostId.from(id);
-        Post found = this.postRepository.findById(postId);
-        if (found == null) {
+        Optional<Post> found = this.postRepository.findById(postId);
+        if (found.isEmpty()) {
             throw new PostNotFoundException("invalid post id");
         }
-        
-        return PostDto.from(found);
+
+        return PostDto.from(found.get());
     }
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,7 +41,7 @@ class GetCommentsServiceTest {
         Post post = new Post("title", "author", MultilineText.from("content"));
         PostId postId = post.id();
         Comment comment = new Comment("댓쓴이", MultilineText.from("댓글내용"));
-        when(postRepository.findById(postId)).thenReturn(post);
+        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
         when(commentRepository.findAll(postId)).thenReturn(List.of(comment));
         // Act
         List<CommentDto> output = getCommentsService.list(postId.toString());

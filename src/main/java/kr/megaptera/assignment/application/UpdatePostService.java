@@ -8,6 +8,8 @@ import kr.megaptera.assignment.models.PostId;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UpdatePostService {
 
@@ -18,11 +20,11 @@ public class UpdatePostService {
     }
 
     public PostDto update(String id, PostDto postDto) {
-        Post found = postRepository.findById(PostId.from(id));
-        if (found == null) {
+        Optional<Post> found = postRepository.findById(PostId.from(id));
+        if (found.isEmpty()) {
             throw new PostNotFoundException("invalid post id");
         }
-        Post updatedPost = new Post(found, postDto.getTitle(), MultilineText.from(postDto.getContent()));
+        Post updatedPost = new Post(found.get(), postDto.getTitle(), MultilineText.from(postDto.getContent()));
         postRepository.save(updatedPost);
 
         return PostDto.from(updatedPost);

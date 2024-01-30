@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -32,7 +34,7 @@ class DeletePostServiceTest {
     void deleteExistingPost() {
         // Arrange
         Post post = new Post("title", "author", MultilineText.from("content"));
-        when(postRepository.findById(post.id())).thenReturn(post);
+        when(postRepository.findById(post.id())).thenReturn(Optional.of(post));
 
         // Act
         PostDto outputPostDto = deletePostService.delete(post.id().toString());

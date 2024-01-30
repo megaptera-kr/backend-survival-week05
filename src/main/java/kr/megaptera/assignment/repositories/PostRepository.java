@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class PostRepository {
@@ -19,8 +20,8 @@ public class PostRepository {
                 .toList();
     }
 
-    public Post findById(PostId postId) {
-        return repository.get(postId);
+    public Optional<Post> findById(PostId postId) {
+        return Optional.ofNullable(repository.get(postId));
     }
 
     public void save(Post post) {

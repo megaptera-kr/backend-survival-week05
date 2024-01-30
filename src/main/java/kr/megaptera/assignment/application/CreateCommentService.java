@@ -21,7 +21,7 @@ public class CreateCommentService {
     }
 
     public CommentDto create(String postId, CommentDto commentDto) {
-        if (postRepository.findById(PostId.from(postId)) == null) {
+        if (postRepository.findById(PostId.from(postId)).isEmpty()) {
             throw new PostNotFoundException("Invalid post id");
         }
 

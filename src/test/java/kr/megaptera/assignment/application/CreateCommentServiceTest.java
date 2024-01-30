@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +41,7 @@ class CreateCommentServiceTest {
         Post post = new Post("title", "author", MultilineText.from("content"));
         PostId postId = post.id();
         postRepository.save(post);
-        when(postRepository.findById(postId)).thenReturn(post);
+        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
 
         Constructor<CommentDto> constructor = CommentDto.class.getDeclaredConstructor(String.class, String.class, String.class);
         constructor.setAccessible(true);

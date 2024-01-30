@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +34,7 @@ class UpdatePostServiceTest {
     void update() {
         // Arrange
         Post post = new Post("title", "author", MultilineText.from("content"));
-        when(postRepository.findById(post.id())).thenReturn(post);
+        when(postRepository.findById(post.id())).thenReturn(Optional.of(post));
         Post updatedPost = new Post(post, "수정된 제목", MultilineText.from("수정된 내용"));
         // Act
         PostDto outputPostDto = updatePostService.update(post.id().toString(), PostDto.from(updatedPost));
