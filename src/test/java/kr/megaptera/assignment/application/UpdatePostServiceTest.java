@@ -55,7 +55,7 @@ class UpdatePostServiceTest {
     void updateWithNoPost() {
         // Arrange
         String nonExistingPostId = "non-existing-post-id";
-        when(postRepository.findById(PostId.from(nonExistingPostId))).thenReturn(null);
+        when(postRepository.findById(PostId.from(nonExistingPostId))).thenReturn(Optional.empty());
         PostDto mockDto = mock(PostDto.class);
         // Act
         assertThrows(PostNotFoundException.class, () -> updatePostService.update(nonExistingPostId, mockDto));

@@ -53,7 +53,7 @@ class DeletePostServiceTest {
     void deleteNonExistingPost() {
         //Arrange
         String postId = "non-existing-post-id";
-        when(postRepository.findById(PostId.from(postId))).thenReturn(null);
+        when(postRepository.findById(PostId.from(postId))).thenReturn(Optional.empty());
 
         // Act
         assertThrows(PostNotFoundException.class, () -> deletePostService.delete(postId));

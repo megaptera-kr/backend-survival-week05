@@ -59,7 +59,7 @@ class GetCommentsServiceTest {
     void getCommentsOfNonExistingPost() {
         // Arrange
         PostId postId = PostId.from("non-existing-post-id");
-        when(postRepository.findById(postId)).thenReturn(null);
+        when(postRepository.findById(postId)).thenReturn(Optional.empty());
         // Act
         assertThrows(PostNotFoundException.class, () -> getCommentsService.list(postId.toString()));
     }

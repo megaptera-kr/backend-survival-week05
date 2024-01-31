@@ -21,7 +21,11 @@ public class PostRepository {
     }
 
     public Optional<Post> findById(PostId postId) {
-        return Optional.ofNullable(repository.get(postId));
+        Post found = repository.get(postId);
+        if (found == null) {
+            return Optional.empty();
+        }
+        return Optional.of(found);
     }
 
     public void save(Post post) {

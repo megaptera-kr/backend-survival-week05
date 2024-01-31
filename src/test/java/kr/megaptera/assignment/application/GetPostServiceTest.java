@@ -52,7 +52,7 @@ class GetPostServiceTest {
     void getNonExistingPost() {
         // Arrange
         String postId = "non-existing-post-id";
-        when(postRepository.findById(PostId.from(postId))).thenReturn(null);
+        when(postRepository.findById(PostId.from(postId))).thenReturn(Optional.empty());
         // Act
         assertThrows(PostNotFoundException.class, () -> getPostService.detail(postId));
     }
