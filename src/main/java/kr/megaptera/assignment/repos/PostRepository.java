@@ -24,7 +24,8 @@ public class PostRepository {
 
     public PostDto getPost(String id) {
         return new PostDto(posts.stream()
-                .filter(post -> post.id().equals(id)).findFirst()
+                .filter(post -> post.id().equals(id))
+                .findFirst()
                 .get());
     }
 
@@ -42,6 +43,8 @@ public class PostRepository {
     }
 
     public void deletePost(PostDto dto) {
-        posts = posts.stream().filter(post -> !post.id().equals(dto.getId())).collect(Collectors.toList());
+        posts = posts.stream()
+                .filter(post -> !post.id().equals(dto.getId()))
+                .collect(Collectors.toList());
     }
 }
