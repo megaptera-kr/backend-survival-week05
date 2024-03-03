@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/posts")
 public class PostController {
     @Autowired
     private CreatePostService createPostService;
+    @Autowired
     private GetPostsService getPostsService;
+    @Autowired
     private GetPostService getPostService;
+    @Autowired
     private UpdatePostService updatePostService;
+    @Autowired
     private DeletePostService deletePostService;
     private final ObjectMapper objectMapper;
 

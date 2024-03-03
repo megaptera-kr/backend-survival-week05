@@ -10,9 +10,8 @@ public class UpdateCommentService {
     @Autowired
     CommentRepository commentRepository;
     public CommentDto updateComment(CommentDto comment) {
-        CommentDto transferComment = commentRepository.getCommentByCommentId(comment);
-        transferComment.setContent(comment.getContent());
-        commentRepository.updateComment(transferComment);
-        return transferComment;
+        CommentDto getDbComment = commentRepository.getCommentByCommentId(comment);
+        commentRepository.updateComment(comment);
+        return getDbComment;
     }
 }

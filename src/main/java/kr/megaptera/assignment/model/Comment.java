@@ -1,5 +1,6 @@
 package kr.megaptera.assignment.model;
 
+import com.github.f4b6a3.tsid.TsidCreator;
 import kr.megaptera.assignment.dtos.CommentDto;
 
 public class Comment {
@@ -19,10 +20,14 @@ public class Comment {
     }
 
     public Comment(CommentDto dto) {
-        this.postId = dto.getPostId();
-        this.id = dto.getId();
-        this.author = dto.getAuthor();
-        this.content = dto.getContent();
+        this(dto.getPostId(), dto.getId(), dto.getAuthor(), dto.getContent());
+    }
+
+    public Comment(String postId, String author, String content) {
+        this.id = TsidCreator.getTsid().toString();
+        this.postId = postId;
+        this.author = author;
+        this.content = content;
     }
 
     public String postId() {

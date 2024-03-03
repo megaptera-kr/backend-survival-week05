@@ -9,6 +9,13 @@ public class Post {
     private String author;
     private String content;
 
+    public Post(String id, String title, String author, String content) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
+
     public Post(String title, String author, String content) {
         this.id = TsidCreator.getTsid().toString();
         this.title = title;
@@ -17,7 +24,7 @@ public class Post {
     }
 
     public Post(PostDto dto) {
-        this(dto.getTitle(), dto.getAuthor(), dto.getContent());
+        this(dto.getId(), dto.getTitle(), dto.getAuthor(), dto.getContent());
     }
 
     public String id() {

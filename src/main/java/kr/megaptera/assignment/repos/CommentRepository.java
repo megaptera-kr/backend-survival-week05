@@ -26,11 +26,12 @@ public class CommentRepository {
     }
 
 
-    public void createComment(CommentDto comment) {
-        comments.add(new Comment( comment.getPostId()
-                                , comment.getId()
-                                , comment.getAuthor()
-                                , comment.getAuthor()));
+    public CommentDto createComment(CommentDto dto) {
+        Comment comment = new Comment( dto.getPostId()
+                                     , dto.getAuthor()
+                                     , dto.getAuthor());
+        comments.add(comment);
+        return new CommentDto(comment);
     }
 
     public void updateComment(CommentDto dto) {

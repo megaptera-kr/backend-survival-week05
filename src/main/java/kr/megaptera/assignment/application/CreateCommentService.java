@@ -10,7 +10,6 @@ public class CreateCommentService {
     @Autowired
     private CommentRepository commentRepository;
     public CommentDto createComment(CommentDto comment) {
-        commentRepository.createComment(comment);
-        return comment;
+        return commentRepository.createComment(comment);
     }
 }

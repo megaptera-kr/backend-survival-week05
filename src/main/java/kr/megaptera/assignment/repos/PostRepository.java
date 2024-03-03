@@ -15,10 +15,7 @@ public class PostRepository {
     public List<PostDto> getPosts() {
         return posts.stream()
                 .map(post ->{
-                    return new PostDto(post.id()
-                            , post.title()
-                            , post.author()
-                            , post.content());
+                    return new PostDto(post);
                 }).collect(Collectors.toList());
     }
 
@@ -30,7 +27,7 @@ public class PostRepository {
     }
 
     public PostDto createPost(PostDto post) {
-        Post createPost = new Post(post);
+        Post createPost = new Post(post.getTitle(), post.getAuthor(), post.getContent());
         posts.add(createPost);
         return new PostDto(createPost);
     }

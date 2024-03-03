@@ -15,14 +15,15 @@ public class CommentDto {
         this.content = content;
     }
 
-    public CommentDto() {
-    }
 
     public CommentDto(Comment comment) {
         this.postId = comment.postId();
         this.id = comment.id();
         this.content = comment.content();
         this.author = comment.author();
+    }
+
+    public CommentDto() {
     }
 
     public CommentDto(String postId) {
