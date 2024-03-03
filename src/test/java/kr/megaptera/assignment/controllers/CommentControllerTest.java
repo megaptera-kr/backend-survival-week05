@@ -68,7 +68,7 @@ class CommentControllerTest {
     @Test
     @DisplayName("PATCH /comments/{id}?postId={postId}")
     void update() throws Exception {
-        CommentDto updatedComment = new CommentDto("1", "author1", "content1");
+        CommentDto updatedComment = new CommentDto("1", "author1", "content2");
 
         given(updateCommentService.update(any(String.class), any(String.class), any(CommentUpdateDto.class)))
                 .willReturn(updatedComment);
@@ -77,11 +77,11 @@ class CommentControllerTest {
                             .contentType("application/json")
                             .content("""
                             {
-                                "content": "content1"
+                                "content": "content2"
                             }
                             """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("content").value("content1"));
+                .andExpect(jsonPath("content").value("content2"));
 
         verify(updateCommentService).update(any(String.class), any(String.class), any(CommentUpdateDto.class));
     }
